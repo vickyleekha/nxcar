@@ -11,13 +11,6 @@ class OtpScreen extends StatefulWidget {
   final String subTitle;
   final Future<String> Function(String) validateOtp;
   final void Function(BuildContext) routeCallback;
-  final resendOTP;
-  Color topColor;
-  Color bottomColor;
-  final Color titleColor;
-  final Color themeColor;
-  final Color keyboardBackgroundColor;
-  final Widget icon;
 
   // default [otpLength] is 4
   final int otpLength;
@@ -31,32 +24,8 @@ class OtpScreen extends StatefulWidget {
     this.otpLength = 4,
     required this.validateOtp,
     required this.routeCallback,
-    this.themeColor = Colors.black,
-    this.titleColor = Colors.black,
-    required this.icon,
-    required this.keyboardBackgroundColor,
-    this.resendOTP,
-    required this.bottomColor,
-    required this.topColor,
     required this.phone,
   });
-
-  OtpScreen.withGradientBackground(
-      {required Key key,
-      this.title = "Enter Your OTP",
-      this.subTitle = "4-digit number has been sent to your mobile number",
-      this.otpLength = 4,
-      this.resendOTP,
-      required this.validateOtp,
-      required this.routeCallback,
-      this.themeColor = Colors.black,
-      this.titleColor = Colors.black,
-      required this.topColor,
-      required this.bottomColor,
-      required this.keyboardBackgroundColor,
-      required this.icon,
-      required this.phone})
-      : super(key: key);
 
   @override
   OtpScreenState createState() => OtpScreenState();
@@ -65,12 +34,14 @@ class OtpScreen extends StatefulWidget {
 class OtpScreenState extends State<OtpScreen>
     with SingleTickerProviderStateMixin {
   Size? _screenSize;
-  List<String>? otpValues;
-  bool showLoadingButton = false;
 
+  bool showLoadingButton = false;
+  TextEditingController? contrller1;
+  TextEditingController? contrller2;
+  TextEditingController? contrller3;
+  TextEditingController? contrller4;
   @override
   void initState() {
-    otpValues = List<String>.filled(widget.otpLength, '', growable: false);
     super.initState();
   }
 
@@ -108,13 +79,13 @@ class OtpScreenState extends State<OtpScreen>
   /// Return subTitle label
   get _getSubtitleText {
     return Text(
-      widget.phone,
+      widget.phone.toString().replaceRange(2, 8, '*' * 6),
       textAlign: TextAlign.start,
       style: const TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-          letterSpacing: 0.68,
-          color: Color(0xFF171634)),
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          letterSpacing: 0.15,
+          color: Colors.grey),
     );
   }
 
@@ -127,35 +98,45 @@ class OtpScreenState extends State<OtpScreen>
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: getOtpTextWidgetList(),
+        children: [
+          _textFieldOTP(
+            first: true,
+            last: false,
+            controllerr: contrller1,
+          ),
+          _textFieldOTP(
+            first: false,
+            last: false,
+            controllerr: contrller2,
+          ),
+          _textFieldOTP(
+            first: false,
+            last: false,
+            controllerr: contrller3,
+          ),
+          _textFieldOTP(
+            first: false,
+            last: true,
+            controllerr: contrller4,
+          ),
+        ],
       ),
     );
   }
 
   /// Return Resend Button
   get _getResendButton {
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: TextButton(
-          onPressed: widget.resendOTP,
-          child: const Text(
-            "Resend ",
-            style: TextStyle(
-                fontFamily: "NotoSans",
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                color: Color(0xFF67A7ED)),
-          )),
+    return const SizedBox(
+      height: 20,
+      child: Text(
+        "Resend ",
+        style: TextStyle(
+            letterSpacing: 0.25,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            color: Color(0xFF67A7ED)),
+      ),
     );
-  }
-
-  /// Returns otp fields of length [widget.otpLength]
-  List<Widget> getOtpTextWidgetList() {
-    List<Widget> optList = [];
-    for (int i = 0; i < widget.otpLength; i++) {
-      optList.add(_otpTextField(otpValues![i]));
-    }
-    return optList;
   }
 
   /// Returns Otp screen views
@@ -170,7 +151,7 @@ class OtpScreenState extends State<OtpScreen>
           _getInputField,
           _getResendButton,
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 40),
             height: 40,
             width: 342,
             child: ElevatedButton(
@@ -188,9 +169,8 @@ class OtpScreenState extends State<OtpScreen>
                 "Next",
                 style: TextStyle(
                     color: Colors.white,
-                    fontFamily: "DMSans",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16),
               ),
             ),
           )
@@ -200,28 +180,42 @@ class OtpScreenState extends State<OtpScreen>
   }
 
   /// Returns "Otp text field"
-  Widget _otpTextField(String digit) {
-    return Container(
-      height: 48,
+  Widget _textFieldOTP(
+      {bool? first, last, TextEditingController? controllerr}) {
+    return SizedBox(
       width: 48,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFFE0E0E0)),
-          borderRadius: BorderRadius.circular(6)),
-      child: Text(
-        digit != '' ? digit : "",
-        style: TextStyle(
-          fontSize: 30.0,
-          color: widget.titleColor,
+      height: 48,
+      child: TextField(
+        controller: controllerr,
+        autofocus: true,
+        onChanged: (value) {
+          if (value.length == 1 && last == false) {
+            FocusScope.of(context).nextFocus();
+          }
+          if (value.isEmpty && first == false) {
+            FocusScope.of(context).previousFocus();
+          }
+        },
+        showCursor: false,
+        readOnly: false,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w100),
+        keyboardType: TextInputType.number,
+        maxLength: 1,
+        decoration: InputDecoration(
+          counter: const Offstage(),
+          contentPadding: const EdgeInsets.all(8),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                  width: 1, color: Color.fromRGBO(111, 121, 120, 1)),
+              borderRadius: BorderRadius.circular(4)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                  width: 1, color: Color.fromRGBO(111, 121, 120, 1)),
+              borderRadius: BorderRadius.circular(4)),
         ),
       ),
     );
-  }
-
-  ///to clear otp when error occurs
-  void clearOtp() {
-    otpValues = List<String>.filled(widget.otpLength, '', growable: false);
-    setState(() {});
   }
 
   ///to show error  message

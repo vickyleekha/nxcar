@@ -33,11 +33,7 @@ class OTPState extends State<OTP> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        body: OtpScreen.withGradientBackground(
-          resendOTP: () {},
-          topColor: Colors.transparent,
-          bottomColor: Colors.transparent,
-          icon: Image.asset('assets/Logo.png'),
+        body: OtpScreen(
           otpLength: 4,
           validateOtp: (otp) async {
             if (verId == null) {
@@ -55,9 +51,6 @@ class OTPState extends State<OTP> {
               return Future.value("");
             }
           },
-          themeColor: const Color(0xFF171634),
-          titleColor: const Color(0xFF171634),
-          keyboardBackgroundColor: Colors.transparent,
           subTitle: "Please Enter OTP Sent To $phone",
           routeCallback: (context) {},
           key: key,

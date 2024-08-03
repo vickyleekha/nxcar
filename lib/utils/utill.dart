@@ -155,7 +155,7 @@ validator(value, field) {
 // [0-9]{4} means 4 characters in the range of 0 through 9
 // $ means end of string
 
-      String pattern = r"^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$";
+      String pattern = r"^[A-Z]{2}[0-9]{1,2}[A-Z]{2}[0-9]{4}$";
       r"^[0-9]{2}BH[0-9]{4}[A-HJ-NP-Z]{1,2}$";
       RegExp regex = RegExp(pattern);
       if (!regex.hasMatch(value!)) {

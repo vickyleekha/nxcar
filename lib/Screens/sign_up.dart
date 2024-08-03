@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nxcar/Screens/OTP.dart';
 
 import 'package:nxcar/utils/utill.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -115,9 +114,6 @@ class SignUpState extends State<SignUp> {
                       child: TextFormField(
                         controller: number,
                         keyboardType: TextInputType.number,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
                         decoration: decoration(
                             focusNode: _focus1, hintText: "Enter Your number"),
                         focusNode: _focus1,
@@ -137,9 +133,6 @@ class SignUpState extends State<SignUp> {
                       margin: const EdgeInsets.only(top: 10),
                       width: 342,
                       child: TextFormField(
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
                         decoration: decoration(
                           focusNode: _focus,
                           hintText: 'Enter your name',
@@ -163,9 +156,6 @@ class SignUpState extends State<SignUp> {
                       margin: const EdgeInsets.only(top: 10),
                       width: 342,
                       child: TextFormField(
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
                         decoration: decoration(
                           focusNode: _focus2,
                           hintText: 'Enter Your Email',
@@ -189,9 +179,7 @@ class SignUpState extends State<SignUp> {
                       margin: const EdgeInsets.only(top: 10),
                       width: 342,
                       child: TextFormField(
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
+                        textCapitalization: TextCapitalization.characters,
                         decoration: decoration(
                           focusNode: _focus3,
                           hintText: 'Enter your vehicle number',
@@ -236,8 +224,8 @@ class SignUpState extends State<SignUp> {
                         "Next",
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
                       ),
                     ),
                   )
