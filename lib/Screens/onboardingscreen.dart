@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'sign_up.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -81,14 +82,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     image: AssetImage("assets/background.png"))),
           ),
 
-
-          // for apply animation  in app 
+          // for apply animation  in app
           AnimatedContainer(
             width: 149,
             height: 75.36,
             duration: const Duration(seconds: 1),
 
-            //conditon to check where to move image 
+            //conditon to check where to move image
             margin: currentIndex == 1
                 ? const EdgeInsets.only(top: 292, left: 128)
                 : currentIndex == 2 && _start == 3
@@ -171,15 +171,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 619, left: 8, right: 8),
+            margin: const EdgeInsets.only(
+              top: 619,
+            ),
             child: Text(
               textList[currentIndex],
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: GoogleFonts.inter(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
-                  fontSize: 24,
+                  fontSize: 28,
                   decoration: TextDecoration.none),
             ),
           ),

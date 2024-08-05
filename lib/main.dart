@@ -16,17 +16,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Nxcar',
-      theme: _buildTheme(Brightness.light),
+      theme: _buildTheme(Brightness.light, context),
       home: const OnBoardingScreen(),
     );
   }
 
   // modify an entire text theme to use the "NotoSans" font.
-  ThemeData _buildTheme(brightness) {
+  ThemeData _buildTheme(brightness, context) {
     var baseTheme = ThemeData(brightness: brightness);
 
+    final textTheme = Theme.of(context).textTheme;
+
     return baseTheme.copyWith(
-      textTheme: GoogleFonts.notoSansTextTheme(baseTheme.textTheme),
+      textTheme: GoogleFonts.notoSansTextTheme(textTheme).copyWith(
+        bodyMedium: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
+      ),
     );
   }
 }

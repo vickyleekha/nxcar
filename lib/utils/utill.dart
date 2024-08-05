@@ -2,76 +2,8 @@ import 'package:flutter/material.dart';
 
 // this class is made for using utility function
 
-//Custom text feild because all text field are same
-
-// customTextField({
-//   String? hintText,
-//   TextEditingController? controller,
-//   TextInputType? keyboardType,
-//   required int field,
-//   required FocusNode focusNode,
-//   required BuildContext context,
-//   required GlobalKey<FormState> formKey,
-// }) {
-//   return TextFormField(
-//       controller: controller,
-//       keyboardType: keyboardType,
-//       style: const TextStyle(
-//         color: Colors.black,
-//       ),
-//       focusNode: focusNode,
-//       onChanged: (value) {
-//         formKey.currentState!.validate() == true
-//             ? Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => OTP(phone: phone!),
-//                 ))
-//             : null;
-//       },
-//       decoration: InputDecoration(
-//           filled: true,
-//           fillColor: focusNode.hasFocus
-//               ? const Color.fromRGBO(224, 255, 250, 1)
-//               : const Color.fromRGBO(247, 250, 248, 1),
-//           contentPadding: const EdgeInsets.all(8),
-//           enabledBorder: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(8),
-//               borderSide: const BorderSide(
-//                   color: Color.fromRGBO(111, 121, 120, 1), width: 0.2)),
-//           focusedBorder: const OutlineInputBorder(
-//             borderSide:
-//                 BorderSide(width: 1, color: Color.fromRGBO(224, 255, 250, 1)),
-//           ),
-//           errorBorder: const OutlineInputBorder(
-//             borderSide: BorderSide(width: 1, color: Colors.red),
-//           ),
-
-//           // Rich text is use to color astrick mark
-//           label: RichText(
-//             text: TextSpan(
-//                 text: hintText,
-//                 style: const TextStyle(
-//                     fontWeight: FontWeight.w400,
-//                     fontSize: 14,
-//                     color: Color.fromRGBO(154, 165, 177, 1)),
-//                 children: [
-//                   TextSpan(
-//                       text: focusNode.hasFocus ? '' : ' *',
-//                       style: const TextStyle(
-//                         fontWeight: FontWeight.w400,
-//                         fontSize: 14,
-//                         color: Colors.red,
-//                       ))
-//                 ]),
-//           ),
-
-//           //The label will float when the input is focused
-//           floatingLabelBehavior: FloatingLabelBehavior.auto),
-//       validator: (value) => validator(value, field));
-// }
-
-decoration({focusNode, hintText}) => InputDecoration(
+//custom decoration for text field
+decoration({focusNode, hintText, required String string}) => InputDecoration(
     filled: true,
     fillColor: focusNode.hasFocus
         ? const Color.fromRGBO(224, 255, 250, 1)
@@ -98,7 +30,11 @@ decoration({focusNode, hintText}) => InputDecoration(
               color: Color.fromRGBO(154, 165, 177, 1)),
           children: [
             TextSpan(
-                text: focusNode.hasFocus ? '' : ' *',
+                text: focusNode.hasFocus
+                    ? ''
+                    : string.isNotEmpty
+                        ? ''
+                        : ' *',
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
@@ -118,19 +54,24 @@ validator(value, field) {
       RegExp regExp = RegExp(pattern);
 
       if (value!.isEmpty) {
-        return "Please add Phone No.";
+        return "Please add Phone Number";
       } else if (!regExp.hasMatch(value)) {
         return "Phone No. Invalid";
       } else if (value.length != 10) {
         return "Phone No. Invalid";
       }
     case 2:
-      if (value!.isEmpty) {
-        return "Name not be empty";
-      }
+      final nameRegExp = RegExp(r"^[\p{L} ,.'-]*$",
+          caseSensitive: false, unicode: true, dotAll: true);
+
+      return value.isEmpty
+          ? 'Please Enter Your Name'
+          : nameRegExp.hasMatch(value)
+              ? null
+              : 'Enter a Valid Name';
     case 3:
       if (value!.isEmpty) {
-        return 'EmailId Not Be Empty';
+        return 'Please Enter your Email Id';
       }
       String pattern =
           r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
@@ -142,7 +83,7 @@ validator(value, field) {
       }
     case 4:
       if (value!.isEmpty) {
-        return 'Please enter vehicle number';
+        return 'Please Enter Vehicle Number';
       }
 
 // ^ means start of string
@@ -155,11 +96,23 @@ validator(value, field) {
 // [0-9]{4} means 4 characters in the range of 0 through 9
 // $ means end of string
 
-      String pattern = r"^[A-Z]{2}[0-9]{1,2}[A-Z]{2}[0-9]{4}$";
-      r"^[0-9]{2}BH[0-9]{4}[A-HJ-NP-Z]{1,2}$";
+      String pattern = r"^[A-Z]{2}[0-9,A-Z]{1,2}[A-HJ-NP-Z]{1,2}[0-9]{4}$";
+      String pattern1 = r"^[0-9]{2}BH[0-9]{4}[A-HJ-NP-Z]{1,2}$";
       RegExp regex = RegExp(pattern);
-      if (!regex.hasMatch(value!)) {
+      RegExp regex1 = RegExp(pattern1);
+
+      var match =
+          regex.hasMatch(value!) || regex1.hasMatch(value!) ? true : false;
+      if (!match) {
         return "Enter Valid Vehicle Number";
       }
   }
+}
+
+formKey(formKey, formKey1, formKey2, formKey3) {
+  bool all = formKey.currentState!.validate() &&
+      formKey1.currentState!.validate() &&
+      formKey2.currentState!.validate() &&
+      formKey3.currentState!.validate();
+  return all;
 }

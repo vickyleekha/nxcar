@@ -151,20 +151,19 @@ class OtpScreenState extends State<OtpScreen>
           _getInputField,
           _getResendButton,
           Container(
-            margin: const EdgeInsets.only(top: 40),
+            margin: const EdgeInsets.only(top: 30),
             height: 40,
             width: 342,
-            child: ElevatedButton(
+            decoration: const BoxDecoration(
+                color: Color.fromRGBO(65, 203, 195, 1),
+                borderRadius: BorderRadius.all(Radius.circular(8))),
+            child: TextButton(
               onPressed: () {
                 // if (_formKey.currentState!.validate()) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const HomePage()));
                 // }
               },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(65, 203, 195, 1),
-                  shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.circular(2))),
               child: const Text(
                 "Next",
                 style: TextStyle(
