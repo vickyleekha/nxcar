@@ -109,10 +109,31 @@ validator(value, field) {
   }
 }
 
-formKey(formKey, formKey1, formKey2, formKey3) {
+formKey(formKey, formKey1, formKey2, formKey3, int field) {
   bool all = formKey.currentState!.validate() &&
       formKey1.currentState!.validate() &&
       formKey2.currentState!.validate() &&
       formKey3.currentState!.validate();
-  return all;
+
+  switch (field) {
+    case 1:
+      if (formKey.currentState!.validate()) {
+        return all;
+      }
+
+    case 2:
+      if (formKey1.currentState!.validate()) {
+        return all;
+      }
+    case 3:
+      if (formKey2.currentState!.validate()) {
+        return all;
+      }
+    case 4:
+      if (formKey3.currentState!.validate()) {
+        return all;
+      }
+    case 5:
+      return all;
+  }
 }

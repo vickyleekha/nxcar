@@ -122,7 +122,7 @@ class SignUpState extends State<SignUp> {
                         string: name.text),
                     focusNode: _focus1,
                     onChanged: (value) {
-                      formKey(_formKey, _formKey1, _formKey2, _formKey3)
+                      formKey(_formKey, _formKey1, _formKey2, _formKey3,1)
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -143,7 +143,7 @@ class SignUpState extends State<SignUp> {
                         string: name.text),
                     focusNode: _focus,
                     onChanged: (value) {
-                      formKey(_formKey, _formKey1, _formKey2, _formKey3)
+                      formKey(_formKey, _formKey1, _formKey2, _formKey3,2)
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -167,7 +167,7 @@ class SignUpState extends State<SignUp> {
                     ),
                     focusNode: _focus2,
                     onChanged: (value) {
-                      formKey(_formKey, _formKey1, _formKey2, _formKey3)
+                      formKey(_formKey, _formKey1, _formKey2, _formKey3,3)
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -191,7 +191,7 @@ class SignUpState extends State<SignUp> {
                         string: vehicle.text),
                     focusNode: _focus3,
                     onChanged: (value) {
-                      formKey(_formKey, _formKey1, _formKey2, _formKey3)
+                      formKey(_formKey, _formKey1, _formKey2, _formKey3,4)
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -212,7 +212,7 @@ class SignUpState extends State<SignUp> {
                     borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: TextButton(
                   onPressed: () {
-                    if (formKey(_formKey, _formKey1, _formKey2, _formKey3)) {
+                    if (formKey(_formKey, _formKey1, _formKey2, _formKey3,5)) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
