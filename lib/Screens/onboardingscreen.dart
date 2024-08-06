@@ -217,31 +217,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                       borderRadius: BorderRadius.circular(50))),
                       ]),
                 ),
-                TextButton(
-                  child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(65, 203, 195, 1),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                      )),
-                  onPressed: () {
-                    setState(() {
-                      //  check for which page we are in after last page
-                      // navigate to login screen
-                      currentIndex < 2
-                          ? currentIndex++
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignUp(),
-                              ));
-                    });
-                  },
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromRGBO(65, 203, 195, 1),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        //  check for which page we are in after last page
+                        // navigate to login screen
+                        currentIndex < 2
+                            ? currentIndex++
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUp(),
+                                ));
+                      });
+                    },
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),
